@@ -14,6 +14,7 @@ const PATH_PROGRAM_REPO: &str = "impl/program-repo";
 const PATH_SF_AGAVE: &str = "impl/solfuzz-agave";
 const PATH_TARGETS_DIR: &str = "impl/lib";
 const PATH_TEST_VECTORS: &str = "impl/test-vectors";
+const PATH_LOCAL_FIXTURES: &str = "./fixtures";
 
 /// Conformance testing handler.
 pub struct ConformanceHandler {
@@ -68,12 +69,15 @@ impl ConformanceHandler {
 
         // Set up fixtures.
         let fixtures_path = if use_mollusk_fixtures {
+            /*
             // Use the Mollusk-generated fixtures from the program's repository.
             let path = Path::new(PATH_CONFORMANCE).join(PATH_PROGRAM_REPO);
 
             git_clone(&program.repository(), "main", &path);
 
             path.join("program").join("fuzz").join("blob")
+             */
+            PathBuf::from(PATH_LOCAL_FIXTURES)
         } else {
             // Use the fixtures provided by Firedancer.
             let path = Path::new(PATH_CONFORMANCE).join(PATH_TEST_VECTORS);

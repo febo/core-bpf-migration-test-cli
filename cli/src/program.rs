@@ -7,6 +7,7 @@ pub enum Program {
     AddressLookupTable,
     Config,
     FeatureGate,
+    Token,
 }
 
 impl Program {
@@ -18,6 +19,9 @@ impl Program {
             Self::Config => solana_sdk::pubkey!("BuafH9fBv62u6XjzrzS4ZjAE8963ejqF5rt1f8Uga4Q3"),
             Self::FeatureGate => {
                 solana_sdk::pubkey!("3D3ydPWvmEszrSjrickCtnyRSJm1rzbbSsZog8Ub6vLh")
+            }
+            Self::Token => {
+                solana_sdk::pubkey!("ptokNfvuU7terQ2r2452RzVXB3o4GT33yPWo1fUkkZ2")
             }
         }
     }
@@ -35,6 +39,7 @@ impl Program {
             Self::FeatureGate => {
                 solana_sdk::feature_set::migrate_feature_gate_program_to_core_bpf::ID
             }
+            Self::Token => agave_feature_set::replace_spl_token_with_p_token::ID,
         }
     }
 
@@ -43,6 +48,7 @@ impl Program {
             Self::AddressLookupTable => "instr/fixtures/address-lookup-table",
             Self::Config => "instr/fixtures/config",
             Self::FeatureGate => "instr/fixtures/feature-gate",
+            Self::Token => "instr/fixtures/token",
         }
     }
 
@@ -51,6 +57,7 @@ impl Program {
             Self::AddressLookupTable => "address_lookup_table",
             Self::Config => "config",
             Self::FeatureGate => "feature_gate",
+            Self::Token => "token",
         }
     }
 
@@ -59,6 +66,7 @@ impl Program {
             Self::AddressLookupTable => solana_sdk::address_lookup_table::program::ID,
             Self::Config => solana_sdk::config::program::ID,
             Self::FeatureGate => solana_sdk::feature::ID,
+            Self::Token => agave_feature_set::replace_spl_token_with_p_token::SPL_TOKEN_PROGRAM_ID,
         }
     }
 
@@ -87,6 +95,7 @@ impl Program {
                 "8bbe900444c675cfc3fbf0f80ae2eb061e536a09",
             ],
             Self::FeatureGate => vec![],
+            Self::Token => vec![],
         }
     }
 }
@@ -99,6 +108,7 @@ impl FromStr for Program {
             "address-lookup-table" => Ok(Self::AddressLookupTable),
             "config" => Ok(Self::Config),
             "feature-gate" => Ok(Self::FeatureGate),
+            "token" => Ok(Self::Token),
             _ => Err(format!("Invalid program name: {}", s)),
         }
     }
@@ -110,6 +120,7 @@ impl std::fmt::Display for Program {
             Self::AddressLookupTable => "address-lookup-table",
             Self::Config => "config",
             Self::FeatureGate => "feature-gate",
+            Self::Token => "token",
         };
         write!(f, "{}", s)
     }

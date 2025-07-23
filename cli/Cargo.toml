@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+agave-feature-set = { workspace = true }
 cbmt-program-activator = { workspace = true }
 cbmt-program-stub = { workspace = true }
 clap = { workspace = true, features = ["derive"] }

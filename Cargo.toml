@@ -7,20 +7,19 @@ members = [
 resolver = "2"
 
 [workspace.dependencies]
+agave-feature-set = { git = "https://github.com/febo/agave.git", branch = "loader-v4-program-update" }
 cbmt-program-activator = { path = "./programs/activator", version = "0.1.0" }
 cbmt-program-stub = { path = "./programs/stub", version = "0.1.0" }
 clap = "4.5.4"
 indicatif = "0.17.8"
-solana-logger = { git = "https://github.com/buffalojoec/solana", branch = "joec-test-validator-genesis" }
-solana-program = { git = "https://github.com/buffalojoec/solana", branch = "joec-test-validator-genesis" }
-solana-rpc = { git = "https://github.com/buffalojoec/solana", branch = "joec-test-validator-genesis" }
-solana-rpc-client = { git = "https://github.com/buffalojoec/solana", branch = "joec-test-validator-genesis" }
-solana-sdk = { git = "https://github.com/buffalojoec/solana", branch = "joec-test-validator-genesis" }
-solana-test-validator = { git = "https://github.com/buffalojoec/solana", branch = "joec-test-validator-genesis" }
+solana-logger = "2.3.1"
+solana-program = "2.3.0"
+solana-rpc = { git = "https://github.com/febo/agave.git", branch = "loader-v4-program-update" }
+solana-rpc-client = { git = "https://github.com/febo/agave.git", branch = "loader-v4-program-update" }
+solana-sdk = "2.3.1"
+solana-test-validator = { git = "https://github.com/febo/agave.git", branch = "loader-v4-program-update" }
 termcolor = "1.4.1"
 tokio = "1.37.0"
 
 [patch.crates-io]
-solana-program = { git = "https://github.com/buffalojoec/solana", branch = "joec-test-validator-genesis" }
-solana-sdk = { git = "https://github.com/buffalojoec/solana", branch = "joec-test-validator-genesis" }
-solana-zk-token-sdk = { git = "https://github.com/buffalojoec/solana", branch = "joec-test-validator-genesis" }
+solana-zk-token-sdk = { git = "https://github.com/febo/agave.git", branch = "loader-v4-program-update" }
