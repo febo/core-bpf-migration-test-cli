@@ -1,5 +1,6 @@
 use {
-    solana_sdk::{feature_set::FEATURE_NAMES, pubkey::Pubkey},
+    agave_feature_set::FEATURE_NAMES,
+    solana_sdk::pubkey::Pubkey,
     std::io::Write,
     termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor},
 };
