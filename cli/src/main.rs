@@ -11,7 +11,10 @@ use {
     crate::{
         cluster::Cluster,
         conformance::ConformanceHandler,
-        output::{output, title_conformance_test, title_fixtures_test, title_stub_test},
+        output::{
+            output, title_conformance_test, title_fixtures_test, title_program_owner,
+            title_stub_test,
+        },
         program::Program,
         validator::{MigrationTarget, ValidatorContext},
     },
@@ -118,7 +121,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             context
                 .assert_owner(&program_id, &solana_sdk::bpf_loader::id())
                 .await;
-            output("It is.");
+            title_program_owner(&program_id, &solana_sdk::bpf_loader::id());
 
             output(&format!("Activating feature {}...", feature_id));
             context.activate_feature(&feature_id).await;
@@ -129,7 +132,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             context
                 .assert_owner(&program_id, &solana_sdk::bpf_loader_upgradeable::id())
                 .await;
-            output("It is.");
+            title_program_owner(&program_id, &solana_sdk::bpf_loader_upgradeable::id());
 
             context.wait_for_next_slot().await;
 
