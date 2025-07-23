@@ -62,8 +62,8 @@ impl ConformanceHandler {
             Path::new(PATH_CONFORMANCE),
         );
         git_clone(
-            "http://github.com/buffalojoec/solfuzz-agave.git",
-            "support-feature-gate-program",
+            "https://github.com/firedancer-io/solfuzz-agave.git",
+            "agave-v2.3.1",
             &Path::new(PATH_CONFORMANCE).join(PATH_SF_AGAVE),
         );
 
