@@ -114,7 +114,7 @@ impl ConformanceHandler {
         // Build environment.
         Command::new("bash")
             .current_dir(PATH_CONFORMANCE)
-            .arg("install_ubuntu_lite.sh")
+            .arg("install_ubuntu.sh")
             .status()
             .expect("Failed to install dependencies");
 
@@ -150,7 +150,7 @@ impl ConformanceHandler {
         self.builtin_target_path = Some(target_path);
     }
 
-    pub fn build_conformance_target_bpf(&mut self, conformance_mode: bool) {
+    pub fn build_conformance_target_bpf(&mut self, _conformance_mode: bool) {
         make_targets_dir();
 
         let manifest_path = Path::new(PATH_CONFORMANCE)
@@ -163,15 +163,9 @@ impl ConformanceHandler {
             .join(PATH_TARGETS_DIR)
             .join("bpf.so");
 
-        std::env::set_var("CORE_BPF_PROGRAM_ID", self.program_id.to_string());
-        std::env::set_var("CORE_BPF_TARGET", cwd().join(&self.elf_path));
+        std::env::set_var("BPF_PROGRAM_ID", self.program_id.to_string());
+        std::env::set_var("BPF_TARGET", cwd().join(&self.elf_path));
         std::env::set_var("FORCE_RECOMPILE", "true");
-
-        let feature_flag = if conformance_mode {
-            "core-bpf-conformance"
-        } else {
-            "core-bpf"
-        };
 
         Command::new("cargo")
             .arg("build")
@@ -182,14 +176,14 @@ impl ConformanceHandler {
             .arg("--target")
             .arg("x86_64-unknown-linux-gnu")
             .arg("--features")
-            .arg(feature_flag)
+            .arg("bpf-program-conformance") // <- Enable BPF program conformance
             .status()
             .expect("Failed to build target");
 
         mv(&src_path, &target_path);
 
-        std::env::remove_var("CORE_BPF_PROGRAM_ID");
-        std::env::remove_var("CORE_BPF_TARGET");
+        std::env::remove_var("BPF_PROGRAM_ID");
+        std::env::remove_var("BPF_TARGET");
         std::env::remove_var("FORCE_RECOMPILE");
 
         self.bpf_target_path = Some(target_path);
