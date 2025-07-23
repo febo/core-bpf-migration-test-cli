@@ -114,30 +114,32 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .await;
 
-            //output("Checking to see if program is currently a builtin...");
-            //if program_id != solana_sdk::feature::id() {
-            //    context.assert_program_is_builtin(&program_id).await;
-            //}
-            //output("It is.");
+            output("Checking to see if program is a Loader v2 program...");
+            context
+                .assert_owner(&program_id, &solana_sdk::bpf_loader::id())
+                .await;
+            output("It is.");
 
             output(&format!("Activating feature {}...", feature_id));
             context.activate_feature(&feature_id).await;
 
             context.wait_for_next_epoch().await;
 
-            output("Checking to see if program is a BPF program...");
-            context.assert_program_is_bpf(&program_id).await;
+            output("Checking to see if program is now a Loader v3 program...");
+            context
+                .assert_owner(&program_id, &solana_sdk::bpf_loader_upgradeable::id())
+                .await;
             output("It is.");
 
             context.wait_for_next_slot().await;
 
-            output("Running stub tests on the BPF program...");
+            output("Running stub tests on the migrated program...");
             context.run_stub_tests(&program_id).await;
             output("Success.");
 
             context.wait_for_next_epoch().await;
 
-            output("Running stub tests again on the BPF program...");
+            output("Running stub tests again on the migrated program...");
             context.run_stub_tests(&program_id).await;
             output("Success.");
 

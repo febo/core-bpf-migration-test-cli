@@ -51,11 +51,13 @@ impl ValidatorContext {
         );
     }
 
-    pub async fn assert_program_is_bpf(&self, program_id: &Pubkey) {
+    pub async fn assert_owner(&self, program_id: &Pubkey, owner: &Pubkey) {
         let account = self.get_account(program_id).await.unwrap();
         assert!(
-            account.owner == solana_sdk::bpf_loader_upgradeable::id(),
-            "Program is not BPF"
+            account.owner == *owner,
+            "incorrect program owner: expected {:?}, got {:?}",
+            owner,
+            account.owner
         );
     }
 
