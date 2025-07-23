@@ -23,7 +23,7 @@ pub fn title_stub_test(feature_id: &Pubkey, buffer_address: &Pubkey) {
     let mut stdout = StandardStream::stdout(ColorChoice::Always);
     writeln!(&mut stdout).unwrap();
     writeln!(&mut stdout, "    =============================================").unwrap();
-    writeln!(&mut stdout, "    Loader v2 -> v3 BPF Migration Test").unwrap();
+    writeln!(&mut stdout, "    Loader v2 -> Loader v3 BPF Migration Test").unwrap();
     writeln!(&mut stdout).unwrap();
     writeln!(&mut stdout, "    Description   : {}", feature_description).unwrap();
     writeln!(&mut stdout).unwrap();
@@ -89,7 +89,7 @@ pub fn output(msg: &str) {
 #[rustfmt::skip]
 pub fn title_program_owner(program_id: &Pubkey, owner: &Pubkey) {
     let mut stdout = StandardStream::stdout(ColorChoice::Always);
-    writeln!(&mut stdout, "    Program       : {}", program_id).unwrap();
+    writeln!(&mut stdout, "    Program      : {}", program_id).unwrap();
     writeln!(&mut stdout, "    Owner        : {}", owner).unwrap();
     writeln!(&mut stdout).unwrap();
     stdout.reset().unwrap();
