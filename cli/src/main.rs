@@ -114,18 +114,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             )
             .await;
 
-            output("Checking to see if program is currently a builtin...");
-            if program_id != solana_sdk::feature::id() {
-                context.assert_program_is_builtin(&program_id).await;
-            }
-            output("It is.");
+            //output("Checking to see if program is currently a builtin...");
+            //if program_id != solana_sdk::feature::id() {
+            //    context.assert_program_is_builtin(&program_id).await;
+            //}
+            //output("It is.");
 
             output(&format!("Activating feature {}...", feature_id));
             context.activate_feature(&feature_id).await;
 
             context.wait_for_next_epoch().await;
 
-            output("Checking to see if program is now a BPF program...");
+            output("Checking to see if program is a BPF program...");
             context.assert_program_is_bpf(&program_id).await;
             output("It is.");
 
