@@ -8,6 +8,11 @@ Supported programs:
 - `address-lookup-table`
 - `config`
 - `feature-gate`
+- `token`
+
+> [!NOTE]
+> While other programs will be recognised by the CLI, they might not work since
+> this fork is tailored to test the SPL Token -> p-token migration.
 
 ## Stub Testing
 
@@ -62,14 +67,3 @@ Note you have the option to use Firedancer's fixtures or the fixtures generated
 by [mollusk](https://github.com/buffalojoec/mollusk), stored in the program's
 repository under `program/fuzz`. Simply provide the `--use-mollusk-fixtures`
 option.
-
-## A Note on the Agave Fork Dependency
-
-This harness temporarily depends on Joe C's fork of Agave in order to allow
-feature accounts to be created and not overwritten/erased by the test
-validator's startup process (genesis config).
-
-For more information, see https://github.com/anza-xyz/agave/pull/3766.
-
-The fork is also based on Agave v2.0.7, since that's the minimum required Agave
-version to activate a Core BPF migration feature.
