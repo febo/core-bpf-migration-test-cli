@@ -9,10 +9,15 @@ cbmt-program-activator = { workspace = true }
 cbmt-program-stub = { workspace = true }
 clap = { workspace = true, features = ["derive"] }
 indicatif = { workspace = true }
+solana-feature-gate-interface = "3.0.0"
+solana-loader-v3-interface = { version = "3.0.0", features = ["serde"] }
 solana-logger = { workspace = true }
 solana-rpc = { workspace = true }
 solana-rpc-client = { workspace = true }
+solana-rpc-client-api = { git = "https://github.com/febo/agave.git", branch = "p-token-migration" }
 solana-sdk = { workspace = true }
+solana-sdk-ids = "3.0.0"
+solana-system-interface = { workspace = true }
 solana-test-validator = { workspace = true }
 termcolor = { workspace = true }
 tokio = { workspace = true, features = ["full"] }

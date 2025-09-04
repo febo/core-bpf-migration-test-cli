@@ -33,12 +33,10 @@ impl Program {
     pub const fn feature_gate(&self) -> Pubkey {
         match self {
             Self::AddressLookupTable => {
-                solana_sdk::feature_set::migrate_address_lookup_table_program_to_core_bpf::ID
+                agave_feature_set::migrate_address_lookup_table_program_to_core_bpf::ID
             }
-            Self::Config => solana_sdk::feature_set::migrate_config_program_to_core_bpf::ID,
-            Self::FeatureGate => {
-                solana_sdk::feature_set::migrate_feature_gate_program_to_core_bpf::ID
-            }
+            Self::Config => agave_feature_set::migrate_config_program_to_core_bpf::ID,
+            Self::FeatureGate => agave_feature_set::migrate_feature_gate_program_to_core_bpf::ID,
             Self::Token => agave_feature_set::replace_spl_token_with_p_token::ID,
         }
     }
@@ -63,9 +61,9 @@ impl Program {
 
     pub const fn program_id(&self) -> Pubkey {
         match self {
-            Self::AddressLookupTable => solana_sdk::address_lookup_table::program::ID,
+            Self::AddressLookupTable => solana_sdk_ids::address_lookup_table::ID,
             Self::Config => solana_sdk::config::program::ID,
-            Self::FeatureGate => solana_sdk::feature::ID,
+            Self::FeatureGate => solana_sdk_ids::feature::ID,
             Self::Token => agave_feature_set::replace_spl_token_with_p_token::SPL_TOKEN_PROGRAM_ID,
         }
     }

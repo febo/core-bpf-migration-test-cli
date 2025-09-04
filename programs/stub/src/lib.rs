@@ -14,7 +14,6 @@ use solana_program::{
     program_error::ProgramError,
     pubkey::Pubkey,
     rent::Rent,
-    system_instruction, system_program,
     sysvar::Sysvar,
 };
 
@@ -35,7 +34,7 @@ pub fn write(
         vec![
             AccountMeta::new(*target_address, true),
             AccountMeta::new(*payer_address, true),
-            AccountMeta::new_readonly(system_program::id(), false),
+            AccountMeta::new_readonly(solana_system_interface::program::id(), false),
         ],
     )
 }
@@ -47,7 +46,7 @@ pub fn burn(program_id: &Pubkey, target_address: &Pubkey) -> Instruction {
         vec![
             AccountMeta::new(*target_address, true),
             AccountMeta::new(incinerator::id(), false),
-            AccountMeta::new_readonly(system_program::id(), false),
+            AccountMeta::new_readonly(solana_system_interface::program::id(), false),
         ],
     )
 }
@@ -73,15 +72,19 @@ pub fn process(program_id: &Pubkey, accounts: &[AccountInfo], input: &[u8]) -> P
             let lamports = rent.minimum_balance(rest.len());
 
             invoke(
-                &system_instruction::transfer(payer_info.key, target_info.key, lamports),
+                &solana_system_interface::instruction::transfer(
+                    payer_info.key,
+                    target_info.key,
+                    lamports,
+                ),
                 &[payer_info.clone(), target_info.clone()],
             )?;
             invoke(
-                &system_instruction::allocate(target_info.key, rest.len() as u64),
+                &solana_system_interface::instruction::allocate(target_info.key, rest.len() as u64),
                 &[target_info.clone()],
             )?;
             invoke(
-                &system_instruction::assign(target_info.key, program_id),
+                &solana_system_interface::instruction::assign(target_info.key, program_id),
                 &[target_info.clone()],
             )?;
 
@@ -103,7 +106,7 @@ pub fn process(program_id: &Pubkey, accounts: &[AccountInfo], input: &[u8]) -> P
             }
 
             invoke(
-                &system_instruction::transfer(
+                &solana_system_interface::instruction::transfer(
                     target_info.key,
                     incinerator_info.key,
                     target_info.lamports(),

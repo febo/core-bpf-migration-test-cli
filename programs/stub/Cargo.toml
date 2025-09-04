@@ -11,3 +11,4 @@ sbf-entrypoint = []
 
 [dependencies]
 solana-program = { workspace = true }
+solana-system-interface = { workspace = true, features = ["bincode"] }

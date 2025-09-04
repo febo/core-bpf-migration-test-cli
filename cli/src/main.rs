@@ -19,8 +19,8 @@ use {
         validator::{MigrationTarget, ValidatorContext},
     },
     clap::{Parser, Subcommand},
+    solana_loader_v3_interface::state::UpgradeableLoaderState,
     solana_rpc_client::nonblocking::rpc_client::RpcClient,
-    solana_sdk::bpf_loader_upgradeable::UpgradeableLoaderState,
     std::{fs::File, io::Write, path::Path, process::Command},
 };
 
@@ -130,9 +130,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             output("Checking to see if program is now a Loader v3 program...");
             context
-                .assert_owner(&program_id, &solana_sdk::bpf_loader_upgradeable::id())
+                .assert_owner(&program_id, &solana_sdk_ids::bpf_loader_upgradeable::id())
                 .await;
-            title_program_owner(&program_id, &solana_sdk::bpf_loader_upgradeable::id());
+            title_program_owner(&program_id, &solana_sdk_ids::bpf_loader_upgradeable::id());
 
             context.wait_for_next_slot().await;
 
@@ -225,6 +225,8 @@ fn cargo_build_sbf(manifest_path: &str) {
         .arg("sbf-entrypoint")
         .arg("--sbf-out-dir")
         .arg(ELF_DIRECTORY)
+        .arg("--tools-version")
+        .arg("sbf-v1.51")
         .status()
         .expect("Failed to build crate");
 }
